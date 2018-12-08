@@ -11,3 +11,7 @@ https://github.com/x3dom/x3dom/tree/1.7.2
 https://www.x3dom.org/examples/
 https://doc.x3dom.org/tutorials/models/inline/index.html
 
+Features to Incorporate
+https://x3dom.org/x3dom/example/x3dom_runtime.html#
+https://doc.x3dom.org/tutorials/animationInteraction/transformations/example.html
+
