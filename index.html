@@ -35,12 +35,16 @@
                     </directionalLight>
                     <PointLight id='point' on='TRUE' intensity='0.9000' ambientIntensity='0.0000' color='0.0 0.6 0.0' location='2 10 0.5 '  attenuation='0 0 0' radius='5.0000'> </PointLight>
                     <SpotLight id='spot' on ="TRUE" beamWidth='0.9' color='0 0 1' cutOffAngle='0.78' location='0 0 12' radius='22'></SpotLight>
+                        
+                     
 
-                    <Group onmousemove="updateStuff(event);">
+                    <Group id="shape_container" onmousemove="updateStuff(event);">
+                        <Transform id="shape_transform" rotation="0 0 1 0">
                         <!-- Fossil -->
-                        <inline id="box_2_id" bboxCenter='0,0,0' bboxSize='-1,-1,-1' children='X3DChildNode' load='true' mapDEFToID='true' metadata='X3DMetadataObject' nameSpaceName='[]' render='true' url="untitled2.x3d">
-                            <Background DEF="WO_World" groundColor="0.7 0.7 0.7" skyColor="0.7 0.7 0.7" groundAngle="" skyAngle="" backUrl="" bottomUrl="" frontUrl="" leftUrl="" rightUrl="" topUrl="" id="[]__WO_World"></Background>    
-                        </inline>
+                            <inline id="box_2_id" bboxCenter='0,0,0' bboxSize='-1,-1,-1' children='X3DChildNode' load='true' mapDEFToID='true' metadata='X3DMetadataObject' nameSpaceName='[]' render='true' url="untitled2.x3d">
+                                <Background DEF="WO_World" groundColor="0.7 0.7 0.7" skyColor="0.7 0.7 0.7" groundAngle="" skyAngle="" backUrl="" bottomUrl="" frontUrl="" leftUrl="" rightUrl="" topUrl="" id="[]__WO_World"></Background>    
+                            </inline>
+                        </Transform>
                     </Group>
 
                     <!-- EXAMPLE GROUND PLANE, FOR BETTER ORIENTATION -->
@@ -63,23 +67,82 @@
                       </Transform>
                     </Transform>
 
+                        
+                    
+                        
                     </scene>
                 </x3d>
-                
-                <button  onclick="document.getElementById('right').setAttribute('set_bind','true');" style="border: none; background: transparent; position: fixed; font-size: 3em;z-index: 100;left:125px;bottom:75px;"><i class="fas fa-chevron-circle-right"></i></button>
+    <!--          
+    <button  onclick="document.getElementById('right').setAttribute('set_bind','true');" style="border: none; background: transparent; position: fixed; font-size: 3em;z-index: 100;left:125px;bottom:75px;"><i class="fas fa-chevron-circle-right"></i></button>
     <button onclick="document.getElementById('left').setAttribute('set_bind','true');" style="border: none; background: transparent; position: fixed; font-size: 3em;z-index: 100;left: 25px; bottom: 75px;"><i class="fas fa-chevron-circle-left"></i></button>
     <button  onclick="document.getElementById('front').setAttribute('set_bind','true');" style="border: none; background: transparent; position: fixed; font-size: 3em;z-index: 100;bottom: 25px; left: 75px;"><i class="fas fa-chevron-circle-down"></i></button>
     <button  onclick="document.getElementById('top').setAttribute('set_bind','true');" style="border: none; background: transparent; position: fixed; font-size: 3em;z-index: 100; bottom: 125px; left: 75px;"><i class="fas fa-chevron-circle-up"></i></button>
+    -->
       
-    <div style="clear: both; padding: 2px; color: #00ff00; background-color: black; position: fixed; right: 25px; bottom: 0px;">
+    <div id="logprev1" style="clear: both; padding: 2px; color: #00ff00; background-color: black; position: fixed; right: 25px; bottom: 0px; width: 200px; display: none;">
                   <p id="moveEvent" > ==&gt; Drag the red box around with your mouse! 
                       Use left button for pane and right for zoom. </p>
                   <!--<p id="mouseOverEvent" > ==&gt; Move your mouse over the little primitives to update the markers. </p>-->
                   <p id="viewMat" > &nbsp; </p>
                 </div>
       
-    <span id="anno2d" style="position: absolute; background-color: blue; color: yellow; border: yellow solid 1px; z-index: 99; padding: 6px; margin: 2px; width: 60px; height: 30 px; opacity: 0.7; text_align: center; top: 6px; left: 6px;">
+    <span id="anno2d" style="position: absolute; background-color: blue; color: yellow; border: yellow solid 1px; z-index: 99; padding: 6px; margin: 2px; width: 60px; height: 30 px; opacity: 0.7; text_align: center; top: 6px; left: 6px; display: none;">
         Annotation</span>
+    
+    <div style="position: fixed; bottom: 50px; left: 34%; text-align: center;">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <button onclick="document.getElementById('top').setAttribute('set_bind','true');" type="button" class="btn btn-secondary">Top</button>
+            <button onclick="document.getElementById('left').setAttribute('set_bind','true');" type="button" class="btn btn-secondary">Left</button>
+            <button onclick="document.getElementById('front').setAttribute('set_bind','true');" type="button" class="btn btn-secondary">Front</button>
+            <button onclick="document.getElementById('right').setAttribute('set_bind','true');" type="button" class="btn btn-secondary">Right</button>
+        </div>
+        <br>
+        <img class="mt-2" width="auto" height="50" src="assets/Asset%201.svg">
+        <br>
+        <h6>Move</h6>
+    </div>
+    <div style="position: fixed; bottom: 50px; left: 52%; text-align: center;">
+        <div class="btn-group mr-2" role="group" aria-label="Second group">
+            <button onclick="vertical()" type="button" class="btn btn-secondary">Vertical</button>
+            <button onclick="horizontal()" type="button" class="btn btn-secondary">Horizontal</button>
+        </div>
+        <br>
+        <img class="mt-2" width="auto" height="50" src="assets/Asset%202.svg">
+        <br>
+        <h6>Rotate</h6>
+    </div>
+                
+    <div class="card" style="position:fixed; top: 50px; left: 50px; width: 300px;">
+      <div class="card-header">
+        <i class="fas fa-robot"></i> DinoTutor 
+        <span class="float-right">
+            <i id="minimize_icon" onclick="minimize_discussion()" class="fas fa-window-minimize"></i>
+            <i id="maximize_icon" onclick="maximize_discussion()" class="fas fa-window-maximize" style="display: none;"></i>
+        </span>
+      </div>
+      <div id="discussion_thread" class="card-body" style="height: 200px; overflow-y: scroll;">
+          <div class="card mr-3 mt-1">
+              <div class="card-body">
+                This is some prompt delivered by the tutor.
+              </div>
+          </div>
+          <div class="card ml-3 mt-1">
+              <div class="card-body">
+                This is some response by the student.
+              </div>
+          </div>
+      </div>
+      <div id="discussion_input" class="card-body">
+          <textarea id="discussion_textarea" class="form-control" rows="2"></textarea>
+          <button onclick="discussion_respond()" type="button" class="btn btn-secondary mt-1">Submit</button>
+      </div>
+    </div>
+                
+    <!-- Debug Controls -->
+    <div onclick="toggle_debugcontrols()" style="position: fixed; font-size: 3em; top: 50px; right: 50px; z-index: 100; color: lightgray;">
+        <i class="fas fa-wrench"></i>
+    </div>
+                
             </div>
         </div> 
     </div>
@@ -188,6 +251,91 @@
         document.getElementById('top').addEventListener('viewpointChanged', viewFunc, false);
         viewFunc(null);
     }  
+        
+    function vertical(){
+        console.log("vertical() ready...");
+        var position = document.getElementById("shape_transform").getAttribute('rotation');
+        console.log(position);
+        var positionparse = position.split(" ");
+        console.log(positionparse);
+        positionparse[0] = "1";
+        positionparse[1] = "0";
+        positionparse[2] = "0";
+        positionparse[3] = String(Number(positionparse[3]) + Number(-0.78));
+        var newposition = positionparse.join(" ");
+        console.log(newposition);
+        document.getElementById("shape_container").innerHTML = `
+            <Transform id="shape_transform" rotation="`+newposition+`">
+                        <!-- Fossil -->
+                            <inline id="box_2_id" bboxCenter='0,0,0' bboxSize='-1,-1,-1' children='X3DChildNode' load='true' mapDEFToID='true' metadata='X3DMetadataObject' nameSpaceName='[]' render='true' url="untitled2.x3d">
+                                <Background DEF="WO_World" groundColor="0.7 0.7 0.7" skyColor="0.7 0.7 0.7" groundAngle="" skyAngle="" backUrl="" bottomUrl="" frontUrl="" leftUrl="" rightUrl="" topUrl="" id="[]__WO_World"></Background>    
+                            </inline>
+                        </Transform>                
+        `;
+    }
+        
+    function horizontal(){
+        console.log("horizontal() ready...");
+        var position = document.getElementById("shape_transform").getAttribute('rotation');
+        console.log(position);
+        var positionparse = position.split(" ");
+        console.log(positionparse);
+        positionparse[0] = "0";
+        positionparse[1] = "1";
+        positionparse[2] = "0";
+        positionparse[3] = String(Number(positionparse[3]) + Number(-0.78));
+        var newposition = positionparse.join(" ");
+        console.log(newposition);
+        document.getElementById("shape_container").innerHTML = `
+            <Transform id="shape_transform" rotation="`+newposition+`">
+                        <!-- Fossil -->
+                            <inline id="box_2_id" bboxCenter='0,0,0' bboxSize='-1,-1,-1' children='X3DChildNode' load='true' mapDEFToID='true' metadata='X3DMetadataObject' nameSpaceName='[]' render='true' url="untitled2.x3d">
+                                <Background DEF="WO_World" groundColor="0.7 0.7 0.7" skyColor="0.7 0.7 0.7" groundAngle="" skyAngle="" backUrl="" bottomUrl="" frontUrl="" leftUrl="" rightUrl="" topUrl="" id="[]__WO_World"></Background>    
+                            </inline>
+                        </Transform>                
+        `;
+        
+    }
+        
+    function minimize_discussion(){
+        document.getElementById("discussion_thread").style.display = "none";
+        document.getElementById("discussion_input").style.display = "none";
+        document.getElementById("minimize_icon").style.display = "none";
+        document.getElementById("maximize_icon").style.display = "block";
+    }
+        
+    function maximize_discussion(){
+        document.getElementById("discussion_thread").style.display = "block";
+        document.getElementById("discussion_input").style.display = "block";
+        document.getElementById("minimize_icon").style.display = "block";
+        document.getElementById("maximize_icon").style.display = "none";
+    }
+        
+    function discussion_respond(){
+        var value = document.getElementById("discussion_textarea").value;
+        var element = document.getElementById("discussion_thread");
+        element.innerHTML +=         
+        `<div class="card ml-3 mt-1">
+              <div class="card-body">`
+                +value+
+              `</div>
+          </div>`;
+    }
+        
+    function toggle_debugcontrols(){
+        if(document.getElementById("logprev1").style.display == "none"){
+            document.getElementById("logprev1").style.display = "block";    
+        }else{
+            document.getElementById("logprev1").style.display = "none";
+        }
+        
+        if(document.getElementById("anno2d").style.display == "none"){
+            document.getElementById("anno2d").style.display = "block";
+        }else{
+            document.getElementById("anno2d").style.display = "none";
+        }
+    }
+        
     </script>
   </body>
 </html>
